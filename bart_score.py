@@ -2,7 +2,7 @@
 import torch
 import torch.nn as nn
 import traceback
-from transformers import BartTokenizer, BartForConditionalGeneration
+from transformers import MBartTokenizer, MBartForConditionalGeneration
 from typing import List
 import numpy as np
 
@@ -12,8 +12,8 @@ class BARTScorer:
         # Set up model
         self.device = device
         self.max_length = max_length
-        self.tokenizer = BartTokenizer.from_pretrained(checkpoint)
-        self.model = BartForConditionalGeneration.from_pretrained(checkpoint)
+        self.tokenizer = MBartTokenizer.from_pretrained(checkpoint)
+        self.model = MBartForConditionalGeneration.from_pretrained(checkpoint)
         self.model.eval()
         self.model.to(device)
 
