@@ -2,18 +2,27 @@
 import torch
 import torch.nn as nn
 import traceback
-from transformers import MBartTokenizer, MBartForConditionalGeneration
+from transformers import MBart50TokenizerFast, MBartForConditionalGeneration
 from typing import List
 import numpy as np
-
+from transformers import (
+    T5ForConditionalGeneration, T5TokenizerFast, 
+    AutoModelForSeq2SeqLM, 
+    MT5ForConditionalGeneration, MT5TokenizerFast, AdamW, AddedToken,
+    GPT2LMHeadModel, GPT2Tokenizer,
+    DataCollatorForLanguageModeling,
+    AutoTokenizer,
+    get_linear_schedule_with_warmup
+)
 
 class BARTScorer:
     def __init__(self, device='cuda:0', max_length=1024, checkpoint='facebook/bart-large-cnn'):
         # Set up model
         self.device = device
         self.max_length = max_length
-        self.tokenizer = MBartTokenizer.from_pretrained(checkpoint)
-        self.model = MBartForConditionalGeneration.from_pretrained(checkpoint)
+        print("version MT5")
+        self.model = MT5ForConditionalGeneration.from_pretrained(checkpoint)
+        self.tokenizer = MT5TokenizerFast.from_pretrained(checkpoint)
         self.model.eval()
         self.model.to(device)
 
